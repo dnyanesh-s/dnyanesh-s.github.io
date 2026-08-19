@@ -346,9 +346,9 @@ section:not(.hero) > .container.is-visible{
 <nav>
 <div class="logo">DS</div>
 
-<button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+<button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="nav-menu" aria-expanded="false">☰</button>
 
-<ul class="nav-links">
+<ul class="nav-links" id="nav-menu">
   <li><a href="#about">About</a></li>
   <li><a href="#experience">Experience</a></li>
   <li><a href="#clients">Clients</a></li>
@@ -727,6 +727,14 @@ sectionLinks.forEach(link => {
     navLinks.classList.remove('is-open');
     menuToggle.setAttribute('aria-expanded', 'false');
   });
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && navLinks.classList.contains('is-open')) {
+    navLinks.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.focus();
+  }
 });
 
 const revealObserver = new IntersectionObserver(entries => {
