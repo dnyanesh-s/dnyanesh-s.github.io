@@ -590,13 +590,17 @@ mark{
   transform:none;
 }
 
+.contact-actions{
+  display:grid;
+  gap:12px;
+}
+
 .contact-line{
   display:flex;
   align-items:center;
   justify-content:center;
   flex-wrap:wrap;
   gap:9px;
-  margin:8px 0;
 }
 
 .copy-action{
@@ -1188,6 +1192,7 @@ engineering leadership.
 
 <div class="card" style="text-align:center">
 
+<div class="contact-actions">
 <div class="contact-line">
 <p>📧 <a href="mailto:dnyaneshwar1995@gmail.com">dnyaneshwar1995@gmail.com</a></p>
 <button class="copy-action" type="button" data-copy="dnyaneshwar1995@gmail.com" data-copy-label="email address">Copy</button>
@@ -1197,15 +1202,14 @@ engineering leadership.
 <button class="copy-action" type="button" data-copy="+358503364377" data-copy-label="phone number">Copy</button>
 </div>
 
-<br>
-
-<p>
+<div class="contact-line">
   <a
      href="https://www.linkedin.com/in/dnyaneshwar-suryawanshi-a5a15918a/"
      target="_blank">
      LinkedIn Profile
   </a>
-</p>
+</div>
+</div>
 
 </div>
 
