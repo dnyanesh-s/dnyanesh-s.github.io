@@ -651,6 +651,14 @@ body.light-theme .skill-search input{
   font-size:.9rem;
 }
 
+.mobile-skill-hint{
+  display:none;
+}
+
+.mobile-client-hint{
+  display:none;
+}
+
 mark{
   padding:0 2px;
   border-radius:2px;
@@ -705,6 +713,11 @@ mark{
 .client-card:hover .client-domain,
 .client-card:focus .client-domain,
 .client-card:focus-within .client-domain{
+  opacity:1;
+  transform:none;
+}
+
+.client-card.is-domain-open .client-domain{
   opacity:1;
   transform:none;
 }
@@ -766,6 +779,11 @@ section:not(.hero) > .container.is-visible{
   50%{transform:translate3d(0,-18px,0) rotate(8deg)}
 }
 
+@keyframes skill-detail-enter{
+  from{opacity:0;transform:translateY(3px)}
+  to{opacity:1;transform:none}
+}
+
 @media(max-width:1100px){
 
     nav{
@@ -806,6 +824,32 @@ section:not(.hero) > .container.is-visible{
 }
 
 @media(max-width:768px){
+
+    .skill-card li[data-description]::after{
+      display:none;
+    }
+
+    .skill-card li[data-description].is-detail-open::after{
+      display:block;
+      margin:5px 0 0;
+      animation:skill-detail-enter .25s ease both;
+    }
+
+    .mobile-skill-hint{
+      display:block;
+      margin:-6px 0 16px;
+      color:var(--muted);
+      font-size:.82rem;
+      text-align:center;
+    }
+
+    .mobile-client-hint{
+      display:block;
+      margin:-6px 0 16px;
+      color:var(--muted);
+      font-size:.82rem;
+      text-align:center;
+    }
 
     .hero h1{
       font-size:2.4rem;
@@ -1077,6 +1121,8 @@ engineering leadership.
 
 <h2 class="title">Clients</h2>
 
+<p class="mobile-client-hint">Tap a client to see the related domain.</p>
+
 <div class="grid">
 
 <div class="card client-card" tabindex="0"><strong>KONE</strong><span class="client-domain">Elevator control systems</span></div>
@@ -1111,6 +1157,8 @@ engineering leadership.
 <button class="skill-filter" type="button" data-filter="delivery" aria-pressed="false">Delivery</button>
 <button class="skill-filter" type="button" data-filter="testing" aria-pressed="false">Testing</button>
 </div>
+
+<p class="mobile-skill-hint">Tap a skill to see details.</p>
 
 <div class="skills-grid">
 
@@ -1627,6 +1675,22 @@ const initializeSkillDetails = () => {
 document.querySelector('.skills-grid').addEventListener('click', event => {
   const item = event.target.closest('li[data-description]');
   if (item) item.classList.toggle('is-detail-open');
+});
+
+const clientCards = [...document.querySelectorAll('.client-card')];
+const toggleClientDomain = card => {
+  const shouldOpen = !card.classList.contains('is-domain-open');
+  clientCards.forEach(item => item.classList.remove('is-domain-open'));
+  card.classList.toggle('is-domain-open', shouldOpen);
+};
+
+clientCards.forEach(card => {
+  card.addEventListener('click', () => toggleClientDomain(card));
+  card.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    toggleClientDomain(card);
+  });
 });
 
 initializeSkillDetails();
