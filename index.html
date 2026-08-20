@@ -382,6 +382,7 @@ body.light-theme .company-summary{
 
 .timeline-item{
   margin-bottom:40px;
+  padding-top:16px;
 }
 
 .timeline-item h3{
@@ -587,6 +588,32 @@ mark{
 .client-card:focus-within .client-domain{
   opacity:1;
   transform:none;
+}
+
+.contact-line{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:9px;
+  margin:8px 0;
+}
+
+.copy-action{
+  padding:5px 9px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:transparent;
+  color:var(--muted);
+  font:inherit;
+  font-size:.78rem;
+  cursor:pointer;
+}
+
+.copy-action:hover,
+.copy-action:focus-visible{
+  border-color:var(--accent);
+  color:var(--accent);
 }
 
 footer{
@@ -799,7 +826,7 @@ AI-powered quality solutions and engineering leadership.
 <div class="grid stats">
 
 <div class="card">
-<h3 class="stat-number" data-count="8" data-suffix="+">0</h3>
+<h3 class="stat-number" data-experience-start="2017-10-01" data-suffix="+">0</h3>
 <p>Years Experience</p>
 </div>
 
@@ -1161,8 +1188,14 @@ engineering leadership.
 
 <div class="card" style="text-align:center">
 
+<div class="contact-line">
 <p>📧 <a href="mailto:dnyaneshwar1995@gmail.com">dnyaneshwar1995@gmail.com</a></p>
+<button class="copy-action" type="button" data-copy="dnyaneshwar1995@gmail.com" data-copy-label="email address">Copy</button>
+</div>
+<div class="contact-line">
 <p>📱 <a href="tel:+358503364377">+358 503364377</a></p>
+<button class="copy-action" type="button" data-copy="+358503364377" data-copy-label="phone number">Copy</button>
+</div>
 
 <br>
 
@@ -1204,10 +1237,31 @@ sectionLinks.forEach(link => {
 });
 
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && navLinks.classList.contains('is-open')) {
-    navLinks.classList.remove('is-open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.focus();
+  const isTyping = ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName);
+
+  if (event.key === 'Escape') {
+    if (navLinks.classList.contains('is-open')) {
+      navLinks.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.focus();
+    }
+    if (skillSearch?.value) {
+      skillSearch.value = '';
+      updateSkillSearch();
+    }
+    return;
+  }
+
+  if (isTyping) return;
+
+  if (event.key === '/') {
+    event.preventDefault();
+    skillSearch?.scrollIntoView({behavior:'smooth', block:'center'});
+    skillSearch?.focus({preventScroll:true});
+  }
+
+  if (event.key.toLowerCase() === 't') {
+    themeToggle?.click();
   }
 });
 
@@ -1248,7 +1302,11 @@ const statObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     entry.target.querySelectorAll('.stat-number').forEach(stat => {
-      const target = Number(stat.dataset.count);
+      const experienceStart = stat.dataset.experienceStart ? new Date(`${stat.dataset.experienceStart}T00:00:00`) : null;
+      const now = new Date();
+      const target = experienceStart
+        ? now.getFullYear() - experienceStart.getFullYear() - (now < new Date(now.getFullYear(), experienceStart.getMonth(), experienceStart.getDate()) ? 1 : 0)
+        : Number(stat.dataset.count);
       const suffix = stat.dataset.suffix || '';
       const start = performance.now();
       const duration = 900;
@@ -1361,6 +1419,36 @@ resumeDownload.addEventListener('click', () => {
   window.setTimeout(() => {
     downloadLabel.textContent = 'Download Resume';
   }, 1800);
+});
+
+const copyText = async value => {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  const temporaryInput = document.createElement('textarea');
+  temporaryInput.value = value;
+  document.body.append(temporaryInput);
+  temporaryInput.select();
+  document.execCommand('copy');
+  temporaryInput.remove();
+};
+
+document.querySelectorAll('.copy-action').forEach(button => {
+  button.addEventListener('click', async () => {
+    const originalText = button.textContent;
+    try {
+      await copyText(button.dataset.copy);
+      button.textContent = 'Copied';
+      button.setAttribute('aria-label', `${button.dataset.copyLabel} copied`);
+    } catch {
+      button.textContent = 'Copy failed';
+    }
+    window.setTimeout(() => {
+      button.textContent = originalText;
+      button.removeAttribute('aria-label');
+    }, 1600);
+  });
 });
 </script>
 
