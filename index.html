@@ -136,19 +136,63 @@ nav .logo{
 }
 
 .theme-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
   border:1px solid var(--line);
-  border-radius:8px;
-  background:transparent;
+  border-radius:999px;
+  background:rgba(15,23,42,.45);
   color:var(--text);
-  padding:8px 11px;
+  padding:5px 10px 5px 6px;
   font:inherit;
   font-size:.85rem;
   cursor:pointer;
+  transition:border-color .2s ease,background .2s ease,color .2s ease,transform .2s ease;
 }
 
 .theme-toggle:hover{
   border-color:var(--accent);
   color:var(--accent);
+  transform:translateY(-1px);
+}
+
+.theme-toggle:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+
+.theme-track{
+  position:relative;
+  width:38px;
+  height:21px;
+  border-radius:999px;
+  background:var(--primary);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);
+}
+
+.theme-thumb{
+  position:absolute;
+  top:3px;
+  left:3px;
+  width:15px;
+  height:15px;
+  border-radius:50%;
+  background:#f8fafc;
+  box-shadow:0 1px 5px rgba(2,6,23,.45);
+  transition:transform .25s ease,background .25s ease;
+}
+
+.theme-toggle[data-theme="light"] .theme-track{
+  background:#eab308;
+}
+
+.theme-toggle[data-theme="light"] .theme-thumb{
+  transform:translateX(17px);
+  background:#fff8c5;
+}
+
+body.light-theme .theme-toggle{
+  background:rgba(255,255,255,.72);
 }
 
 nav ul{
@@ -696,7 +740,10 @@ section:not(.hero) > .container.is-visible{
 <nav>
 <a class="logo" href="#top" aria-label="Back to top">DS</a>
 
-<button class="theme-toggle" type="button" aria-pressed="false">Light theme</button>
+<button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to light theme" data-theme="dark">
+  <span class="theme-track" aria-hidden="true"><span class="theme-thumb"></span></span>
+  <span class="theme-label">Light</span>
+</button>
 <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="nav-menu" aria-expanded="false">☰</button>
 
 <ul class="nav-links" id="nav-menu">
@@ -1287,11 +1334,14 @@ skillFilters.forEach(filter => {
 skillSearch.addEventListener('input', updateSkillSearch);
 
 const themeToggle = document.querySelector('.theme-toggle');
+const themeLabel = themeToggle.querySelector('.theme-label');
 const applyTheme = theme => {
   const isLight = theme === 'light';
   document.body.classList.toggle('light-theme', isLight);
-  themeToggle.textContent = isLight ? 'Dark theme' : 'Light theme';
+  themeToggle.dataset.theme = theme;
+  themeLabel.textContent = isLight ? 'Dark' : 'Light';
   themeToggle.setAttribute('aria-pressed', String(isLight));
+  themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
 };
 
 const savedTheme = localStorage.getItem('portfolio-theme');
