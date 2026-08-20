@@ -20,6 +20,21 @@
   --line:rgba(148,163,184,.16);
 }
 
+body.light-theme{
+  --bg:#edf4f6;
+  --card:#ffffff;
+  --primary:#1559b0;
+  --accent:#087887;
+  --text:#142331;
+  --muted:#4b6370;
+  --line:rgba(20,35,49,.18);
+  background:
+    linear-gradient(rgba(237,244,246,.94),rgba(237,244,246,.98)),
+    repeating-linear-gradient(90deg,transparent 0,transparent 79px,rgba(8,120,135,.08) 80px),
+    repeating-linear-gradient(0deg,transparent 0,transparent 79px,rgba(21,89,176,.06) 80px),
+    var(--bg);
+}
+
 *{
   margin:0;
   padding:0;
@@ -58,6 +73,19 @@ body{
   overflow-x:hidden;
 }
 
+.scroll-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1100;
+  width:100%;
+  height:3px;
+  transform:scaleX(0);
+  transform-origin:left;
+  background:var(--accent);
+  box-shadow:0 0 14px rgba(6,182,212,.8);
+}
+
 .container{
   width:min(90%,1200px);
   max-width:1200px;
@@ -74,6 +102,10 @@ header{
   border-bottom:1px solid var(--line);
 }
 
+body.light-theme header{
+  background:rgba(237,244,246,.95);
+}
+
 nav{
   display:flex;
   justify-content:space-between;
@@ -88,6 +120,10 @@ nav{
   letter-spacing:2px;
 }
 
+nav .logo{
+  color:var(--accent);
+}
+
 .menu-toggle{
   display:none;
   border:1px solid var(--line);
@@ -99,6 +135,22 @@ nav{
   font-size:1.1rem;
 }
 
+.theme-toggle{
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:transparent;
+  color:var(--text);
+  padding:8px 11px;
+  font:inherit;
+  font-size:.85rem;
+  cursor:pointer;
+}
+
+.theme-toggle:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
 nav ul{
   display:flex;
   list-style:none;
@@ -106,7 +158,7 @@ nav ul{
 }
 
 nav a{
-  color:white;
+  color:var(--text);
   text-decoration:none;
 }
 
@@ -129,6 +181,12 @@ nav a.active{
   background:
   radial-gradient(circle at top right,#1e40af33,transparent),
   radial-gradient(circle at bottom left,#0891b233,transparent);
+}
+
+body.light-theme .hero{
+  background:
+    radial-gradient(circle at top right,#1559b01c,transparent),
+    radial-gradient(circle at bottom left,#0878871c,transparent);
 }
 
 .hero::before,
@@ -169,7 +227,7 @@ nav a.active{
 }
 
 .hero h2{
-  margin:15px 0;
+  margin:10px 0;
   color:var(--accent);
 }
 
@@ -180,7 +238,7 @@ nav a.active{
 }
 
 .buttons{
-  margin-top:30px;
+  margin-top:20px;
 }
 
 .btn{
@@ -234,6 +292,13 @@ section{
   transition:transform .25s ease,border-color .25s ease,background .25s ease;
 }
 
+body.light-theme .card,
+body.light-theme .skill-card,
+body.light-theme .role,
+body.light-theme .company-summary{
+  background:rgba(255,255,255,.78);
+}
+
 .card:hover,
 .skill-card:hover{
   transform:translateY(-6px);
@@ -245,9 +310,25 @@ section{
   text-align:center;
 }
 
+.stats{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.stats-section{
+  padding-bottom:30px;
+}
+
+#about{
+  padding-top:30px;
+}
+
 .stats h3{
   color:var(--accent);
   font-size:2.5rem;
+}
+
+.stat-number{
+  font-variant-numeric:tabular-nums;
 }
 
 .timeline{
@@ -261,6 +342,92 @@ section{
 
 .timeline-item h3{
   color:var(--accent);
+}
+
+.role{
+  margin-top:18px;
+  padding:18px;
+  border:1px solid var(--line);
+  border-left:3px solid var(--primary);
+  border-radius:8px;
+  background:rgba(255,255,255,.025);
+}
+
+.role:first-of-type{
+  margin-top:12px;
+}
+
+.role-header{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  width:100%;
+  gap:16px;
+  margin:0;
+  border:0;
+  background:transparent;
+  color:inherit;
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+}
+
+.role-header strong{
+  color:var(--text);
+}
+
+.role-static{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:16px;
+  margin:0;
+}
+
+.role-date{
+  color:var(--muted);
+  white-space:nowrap;
+}
+
+.role ul{
+  margin-top:12px;
+  padding-left:20px;
+}
+
+.role .role-details{
+  display:block;
+}
+
+.role.is-collapsed .role-details{
+  display:none;
+}
+
+.role-toggle-icon{
+  display:inline-block;
+  margin-left:8px;
+  color:var(--accent);
+  transition:transform .2s ease;
+}
+
+.role.is-collapsed .role-toggle-icon{
+  transform:rotate(-90deg);
+}
+
+.company-summary{
+  margin-top:14px;
+  padding:16px 18px;
+  border:1px dashed var(--line);
+  border-radius:8px;
+  color:var(--text);
+}
+
+.company-summary strong{
+  color:var(--text);
+}
+
+.company-summary ul{
+  margin-top:10px;
+  padding-left:20px;
 }
 
 .skills-grid{
@@ -279,6 +446,103 @@ section{
 
 .skill-card ul{
   padding-left:20px;
+}
+
+.skill-filters{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+  margin:-12px 0 28px;
+}
+
+.skill-search{
+  width:min(100%,620px);
+  margin:0 auto 18px;
+}
+
+.skill-search input{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:rgba(15,23,42,.52);
+  color:var(--text);
+  font:inherit;
+}
+
+body.light-theme .skill-search input{
+  background:rgba(255,255,255,.85);
+}
+
+.skill-search input:focus{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.skill-search-status{
+  min-height:1.5em;
+  margin-top:8px;
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+mark{
+  padding:0 2px;
+  border-radius:2px;
+  background:rgba(6,182,212,.3);
+  color:inherit;
+}
+
+.experience-search-match{
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px rgba(6,182,212,.3);
+}
+
+.skill-filter{
+  padding:8px 13px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:transparent;
+  color:var(--muted);
+  font:inherit;
+  font-size:.9rem;
+  cursor:pointer;
+}
+
+.skill-filter:hover,
+.skill-filter[aria-pressed="true"]{
+  border-color:var(--accent);
+  background:rgba(6,182,212,.1);
+  color:var(--text);
+}
+
+.skill-card.is-filtered-out{
+  display:none;
+}
+
+.client-card{
+  min-height:116px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  cursor:default;
+}
+
+.client-domain{
+  color:var(--muted);
+  font-size:.85rem;
+  opacity:0;
+  transform:translateY(5px);
+  transition:opacity .2s ease,transform .2s ease;
+}
+
+.client-card:hover .client-domain,
+.client-card:focus .client-domain,
+.client-card:focus-within .client-domain{
+  opacity:1;
+  transform:none;
 }
 
 footer{
@@ -319,6 +583,10 @@ section:not(.hero) > .container.is-visible{
       display:block;
     }
 
+    .theme-toggle{
+      margin-left:auto;
+    }
+
     .nav-links{
       display:none;
       flex-basis:100%;
@@ -346,7 +614,7 @@ section:not(.hero) > .container.is-visible{
 @media(max-width:768px){
 
     .hero h1{
-        font-size:2.4rem;
+      font-size:2.4rem;
     }
 
     .hero::before{
@@ -368,8 +636,32 @@ section:not(.hero) > .container.is-visible{
       padding:20px;
     }
 
+    .stats{
+      grid-template-columns:1fr;
+    }
+
     .timeline{
       padding-left:20px;
+    }
+
+    .role-header{
+      align-items:flex-start;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .role-static{
+      align-items:flex-start;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .skill-filters{
+      justify-content:flex-start;
+    }
+
+    .role-date{
+      white-space:normal;
     }
 
     .buttons .btn{
@@ -397,22 +689,26 @@ section:not(.hero) > .container.is-visible{
 </head>
 <body>
 
+<div class="scroll-progress" aria-hidden="true"></div>
+
 <header>
 <div class="container">
 <nav>
-<div class="logo">DS</div>
+<a class="logo" href="#top" aria-label="Back to top">DS</a>
 
+<button class="theme-toggle" type="button" aria-pressed="false">Light theme</button>
 <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="nav-menu" aria-expanded="false">☰</button>
 
 <ul class="nav-links" id="nav-menu">
   <li><a href="#about">About</a></li>
   <li><a href="#experience">Experience</a></li>
-  <li><a href="#clients">Clients</a></li>
   <li><a href="#skills">Skills</a></li>
   <li><a href="#leadership">Leadership</a></li>
+  <li><a href="#clients">Clients</a></li>
   <li><a href="#education">Education</a></li>
   <li><a href="#certifications">Certifications</a></li>
   <li><a href="#blog">Blog</a></li>
+  <li><a href="#additional">Additional</a></li>
   <li><a href="#contact">Contact</a></li>
 </ul>
 
@@ -420,7 +716,7 @@ section:not(.hero) > .container.is-visible{
 </div>
 </header>
 
-<section class="hero">
+<section class="hero" id="top">
 <div class="container">
 
 <h1>Dnyaneshwar Suryawanshi</h1>
@@ -428,15 +724,14 @@ section:not(.hero) > .container.is-visible{
 <h2>Team Lead • Senior Test Automation Engineer</h2>
 
 <p>
-Experienced QA Leader specializing in Robot Framework, Python,
-Selenium, Cypress, Appium, API Testing, CI/CD and AI-powered
-test automation solutions.
+Experienced QA Leader focused on automation architecture, CI/CD,
+AI-powered quality solutions and engineering leadership.
 </p>
 
 <div class="buttons">
 
-<a href="resume.pdf" class="btn primary" download>
-  Download Resume
+<a href="Resume_Dnyaneshwar_Suryawanshi.pdf" class="btn primary" download>
+  <span class="download-label">Download Resume</span>
 </a>
 
 <a
@@ -451,29 +746,24 @@ test automation solutions.
 </div>
 </section>
 
-<section>
+<section class="stats-section">
 <div class="container">
 
 <div class="grid stats">
 
 <div class="card">
-<h3>8+</h3>
+<h3 class="stat-number" data-count="8" data-suffix="+">0</h3>
 <p>Years Experience</p>
 </div>
 
 <div class="card">
-<h3>15+</h3>
+<h3 class="stat-number" data-count="15" data-suffix="+">0</h3>
 <p>Projects</p>
 </div>
 
 <div class="card">
-<h3>9+</h3>
+<h3 class="stat-number" data-count="9" data-suffix="+">0</h3>
 <p>Global Clients</p>
-</div>
-
-<div class="card">
-<h3>1000+</h3>
-<p>Automated Tests</p>
 </div>
 
 </div>
@@ -508,50 +798,76 @@ engineering leadership.
 
 <div class="timeline-item">
 <h3>Softability Oy</h3>
-<p><strong>Team Lead</strong> | Jan 2025 – Present</p>
-<ul>
+<div class="role">
+<button class="role-header" type="button" aria-expanded="true"><strong>Team Lead</strong><span class="role-date">Jan 2025 – Present <span class="role-toggle-icon" aria-hidden="true">⌄</span></span></button>
+<div class="role-details"><ul>
 <li>Technical leadership and mentoring</li>
 <li>Performance discussions and onboarding</li>
 <li>Client communication and project planning</li>
 <li>Led Android, Web UI and API automation teams</li>
 <li>Delivered client POCs, demos and technical training</li>
-</ul>
+<li>Provided training, knowledge transfer and ramp-up support for new hires</li>
+<li>Led peer sessions, seminars and webinars on AI, test automation and Robot Framework</li>
+</ul></div>
 </div>
 
-<div class="timeline-item">
-<h3>Senior Test Automation Engineer</h3>
-<p>May 2024 – Present</p>
-<ul>
+<div class="role">
+<button class="role-header" type="button" aria-expanded="true"><strong>Senior Test Automation Engineer</strong><span class="role-date">May 2024 – Present <span class="role-toggle-icon" aria-hidden="true">⌄</span></span></button>
+<div class="role-details"><ul>
 <li>Automation architecture</li>
 <li>AI testing initiatives</li>
 <li>Framework modernization</li>
 <li>Built reusable Robot Framework and Python automation solutions</li>
 <li>Introduced quality gates, parallel execution and test reporting</li>
-</ul>
+<li>Created adaptable automation frameworks for new environments with minimal changes</li>
+<li>Delivered client and stakeholder demos to showcase testing outcomes</li>
+</ul></div>
 </div>
 
-<div class="timeline-item">
-<h3>Test Automation Engineer</h3>
-<p>May 2022 – June 2024</p>
-<ul>
+<div class="role">
+<button class="role-header" type="button" aria-expanded="true"><strong>Test Automation Engineer</strong><span class="role-date">May 2022 – June 2024 <span class="role-toggle-icon" aria-hidden="true">⌄</span></span></button>
+<div class="role-details"><ul>
 <li>Robot Framework solutions</li>
 <li>CI/CD implementation</li>
 <li>Quality gate introduction</li>
 <li>Created and optimized Jenkins pipelines and test workflows</li>
 <li>Improved legacy codebases for maintainability and onboarding</li>
-</ul>
+<li>Contributed to Konecranes crane control system testing and automation</li>
+<li>Implemented report management for clearer progress and issue tracking</li>
+<li>Introduced automation tools and parallel execution processes to improve team productivity</li>
+<li>Validated KONE elevator-control software as part of a System Integration Testing team</li>
+<li>Designed and executed system and integration test cases, including end-to-end testing and defect verification</li>
+</ul></div>
+</div>
 </div>
 
 <div class="timeline-item">
-<h3>L&T Technology Services</h3>
-<p>Oct 2017 – May 2022</p>
+<h3>L&amp;T Technology Services Ltd</h3>
+<div class="company-summary">
 <ul>
-<li>Associate Engineer → Engineer → Senior Engineer</li>
-<li>Android, Web, API and Embedded Testing</li>
-<li>Intel, Zebra, SonyLiv, Zee5, Nets, Denso projects</li>
-<li>Manual, integration, regression, performance and memory-leak testing</li>
+<li>Android, iOS, Web, API, WebOS and embedded testing</li>
+<li>Streaming apps, POS payment applications and terminals, and control system testing</li>
+<li>Intel, Orbic USA, Zebra, SonyLiv, Zee5, Nets/Nexi and Denso projects</li>
+<li>Manual, system integration, regression, performance, KPI/stability, alpha/beta and memory-leak testing</li>
+<li>Designed and executed manual system and integration test cases from software requirements</li>
+<li>Performed end-to-end testing, logged defects and verified fixes</li>
+<li>Collaborated with development and integration teams to ensure expected software behaviour and quality standards</li>
 <li>Maintained test documentation, execution reports and defect records</li>
+<li>Shared testing insights with team members and supported onboarding activities</li>
 </ul>
+</div>
+
+<div class="role">
+<p class="role-static"><strong>Senior Engineer</strong><span class="role-date">Jan 2022 – May 2022</span></p>
+</div>
+
+<div class="role">
+<p class="role-static"><strong>Engineer</strong><span class="role-date">Nov 2018 – Jan 2022</span></p>
+</div>
+
+<div class="role">
+<p class="role-static"><strong>Associate Engineer</strong><span class="role-date">Oct 2017 – Nov 2018</span></p>
+</div>
 </div>
 
 </div>
@@ -566,15 +882,15 @@ engineering leadership.
 
 <div class="grid">
 
-<div class="card">KONE</div>
-<div class="card">Konecranes</div>
-<div class="card">Intel</div>
-<div class="card">SonyLiv</div>
-<div class="card">Zee5</div>
-<div class="card">Zebra</div>
-<div class="card">Denso</div>
-<div class="card">Orbic USA</div>
-<div class="card">Nets</div>
+<div class="card client-card" tabindex="0"><strong>KONE</strong><span class="client-domain">Elevator control systems</span></div>
+<div class="card client-card" tabindex="0"><strong>Konecranes</strong><span class="client-domain">Crane control systems</span></div>
+<div class="card client-card" tabindex="0"><strong>Nets/Nexi</strong><span class="client-domain">Payment platforms</span></div>
+<div class="card client-card" tabindex="0"><strong>SonyLiv</strong><span class="client-domain">Streaming applications</span></div>
+<div class="card client-card" tabindex="0"><strong>Zee5</strong><span class="client-domain">Streaming applications</span></div>
+<div class="card client-card" tabindex="0"><strong>Zebra</strong><span class="client-domain">Android and embedded devices</span></div>
+<div class="card client-card" tabindex="0"><strong>Denso</strong><span class="client-domain">Embedded systems</span></div>
+<div class="card client-card" tabindex="0"><strong>Orbic USA</strong><span class="client-domain">Mobile devices</span></div>
+<div class="card client-card" tabindex="0"><strong>Intel</strong><span class="client-domain">Software and platform testing</span></div>
 
 </div>
 
@@ -586,9 +902,22 @@ engineering leadership.
 
 <h2 class="title">Skills</h2>
 
+<div class="skill-search">
+<input id="skill-search" type="search" placeholder="Search skills and related experience" aria-describedby="skill-search-status">
+<p class="skill-search-status" id="skill-search-status" aria-live="polite"></p>
+</div>
+
+<div class="skill-filters" role="group" aria-label="Filter skills">
+<button class="skill-filter" type="button" data-filter="all" aria-pressed="true">All</button>
+<button class="skill-filter" type="button" data-filter="automation" aria-pressed="false">Automation</button>
+<button class="skill-filter" type="button" data-filter="ai" aria-pressed="false">AI</button>
+<button class="skill-filter" type="button" data-filter="delivery" aria-pressed="false">Delivery</button>
+<button class="skill-filter" type="button" data-filter="testing" aria-pressed="false">Testing</button>
+</div>
+
 <div class="skills-grid">
 
-<div class="skill-card">
+<div class="skill-card" data-category="automation">
 <h3>Automation</h3>
 <ul>
 <li>Robot Framework</li>
@@ -599,28 +928,31 @@ engineering leadership.
 </ul>
 </div>
 
-<div class="skill-card">
+<div class="skill-card" data-category="ai">
 <h3>AI & Innovation</h3>
 <ul>
 <li>GitHub Copilot</li>
 <li>LLM Test Generation</li>
+<li>LLM-based Robot Framework and Python automation generation</li>
 <li>AI Test Analysis</li>
+<li>AI-assisted requirements analysis</li>
 <li>AI Defect Analysis</li>
 <li>Visual Testing</li>
 </ul>
 </div>
 
-<div class="skill-card">
+<div class="skill-card" data-category="delivery">
 <h3>CI/CD</h3>
 <ul>
 <li>Jenkins</li>
 <li>Docker</li>
 <li>Git</li>
+<li>SourceTree</li>
 <li>Bitbucket</li>
 </ul>
 </div>
 
-<div class="skill-card">
+<div class="skill-card" data-category="testing">
 <h3>Testing</h3>
 <ul>
 <li>API Testing</li>
@@ -629,17 +961,29 @@ engineering leadership.
 <li>Functional Testing</li>
 <li>Regression Testing</li>
 <li>Smoke, load and memory-leak testing</li>
+<li>KPI/stability and alpha/beta testing</li>
 <li>UAT</li>
+<li>Test design, test creation and automation architecture</li>
+<li>Test management, bug tracking, continuous integration and code-quality control</li>
 </ul>
 </div>
 
-<div class="skill-card">
+<div class="skill-card" data-category="delivery">
 <h3>Tools & Platforms</h3>
 <ul>
 <li>Jira, Bugzilla, Jama and Confluence</li>
 <li>TestRail, PractiTest, Zephyr and Kanban</li>
-<li>Windows, Linux, Android, iOS, POS and WebOS</li>
-<li>Agile: Scrum, Kanban and SAFe</li>
+<li>Pylint, Robocop and Robotidy</li>
+<li>Windows, Linux (Debian), Android, iOS, POS, WebOS and TV</li>
+<li>Agile, Waterfall, Scrum, Kanban and SAFe</li>
+</ul>
+</div>
+
+<div class="skill-card" data-category="automation">
+<h3>3D &amp; CNC Automation</h3>
+<ul>
+<li>Cura and SketchUp</li>
+<li>OpenBuilds and Universal Gcode Sender</li>
 </ul>
 </div>
 
@@ -677,6 +1021,33 @@ engineering leadership.
 <div class="card">
 <h3>Bachelor of Engineering in Electronics</h3>
 <p>K. J. Somaiya College of Engineering | 2013 – 2017</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section id="additional">
+<div class="container">
+
+<h2 class="title">Additional</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Languages</h3>
+<p>English, Hindi and Marathi</p>
+</div>
+
+<div class="card">
+<h3>Volunteer Work</h3>
+<p>CSR member</p>
+</div>
+
+<div class="card">
+<h3>Technical Interests</h3>
+<p>Robotics, 3D design and printing, graphic design, and video/photo editing.</p>
 </div>
 
 </div>
@@ -743,8 +1114,8 @@ engineering leadership.
 
 <div class="card" style="text-align:center">
 
-<p>📧 dnyaneshwar1995@gmail.com</p>
-<p>📱 +358 503364377</p>
+<p>📧 <a href="mailto:dnyaneshwar1995@gmail.com">dnyaneshwar1995@gmail.com</a></p>
+<p>📱 <a href="tel:+358503364377">+358 503364377</a></p>
 
 <br>
 
@@ -816,6 +1187,131 @@ const activeObserver = new IntersectionObserver(entries => {
 }, {rootMargin:'-35% 0px -55%'});
 
 sections.forEach(section => activeObserver.observe(section));
+
+const progressBar = document.querySelector('.scroll-progress');
+const updateScrollProgress = () => {
+  const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+  progressBar.style.transform = `scaleX(${scrollableHeight > 0 ? window.scrollY / scrollableHeight : 0})`;
+};
+
+window.addEventListener('scroll', updateScrollProgress, {passive:true});
+updateScrollProgress();
+
+const statObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('.stat-number').forEach(stat => {
+      const target = Number(stat.dataset.count);
+      const suffix = stat.dataset.suffix || '';
+      const start = performance.now();
+      const duration = 900;
+      const update = now => {
+        const progress = Math.min((now - start) / duration, 1);
+        stat.textContent = `${Math.round(target * progress)}${suffix}`;
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    });
+    statObserver.unobserve(entry.target);
+  });
+}, {threshold:0.5});
+
+statObserver.observe(document.querySelector('.stats'));
+
+document.querySelectorAll('.role-header').forEach(toggle => {
+  toggle.addEventListener('click', () => {
+    const role = toggle.closest('.role');
+    const isCollapsed = role.classList.toggle('is-collapsed');
+    toggle.setAttribute('aria-expanded', String(!isCollapsed));
+  });
+});
+
+const skillFilters = [...document.querySelectorAll('.skill-filter')];
+const skillCards = [...document.querySelectorAll('.skill-card')];
+const skillSearch = document.querySelector('#skill-search');
+const skillSearchStatus = document.querySelector('#skill-search-status');
+const experienceEntries = [...document.querySelectorAll('#experience .role, #experience .company-summary')];
+let selectedSkillFilter = 'all';
+
+const escapeHtml = value => value.replace(/[&<>'"]/g, character => ({
+  '&':'&amp;',
+  '<':'&lt;',
+  '>':'&gt;',
+  "'":'&#39;',
+  '"':'&quot;'
+}[character]));
+
+const highlightText = (element, query) => {
+  if (!element.dataset.searchText) element.dataset.searchText = element.innerHTML;
+  if (!query) {
+    element.innerHTML = element.dataset.searchText;
+    return;
+  }
+  const pattern = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  element.innerHTML = element.dataset.searchText.replace(pattern, '<mark>$1</mark>');
+};
+
+const updateSkillSearch = () => {
+  const query = skillSearch.value.trim();
+  const normalizedQuery = query.toLowerCase();
+  let visibleSkills = 0;
+  let relatedExperience = 0;
+
+  skillCards.forEach(card => {
+    const matchesFilter = selectedSkillFilter === 'all' || card.dataset.category === selectedSkillFilter;
+    const matchesSearch = !normalizedQuery || card.textContent.toLowerCase().includes(normalizedQuery);
+    card.classList.toggle('is-filtered-out', !matchesFilter || !matchesSearch);
+    highlightText(card, query);
+    if (matchesFilter && matchesSearch) visibleSkills += 1;
+  });
+
+  experienceEntries.forEach(entry => {
+    const matches = normalizedQuery && entry.textContent.toLowerCase().includes(normalizedQuery);
+    entry.classList.toggle('experience-search-match', Boolean(matches));
+    if (matches) relatedExperience += 1;
+  });
+
+  skillSearchStatus.textContent = query
+    ? `${visibleSkills} skill area${visibleSkills === 1 ? '' : 's'} and ${relatedExperience} related experience entr${relatedExperience === 1 ? 'y' : 'ies'} found.`
+    : '';
+};
+
+skillFilters.forEach(filter => {
+  filter.addEventListener('click', () => {
+    selectedSkillFilter = filter.dataset.filter;
+    skillFilters.forEach(button => button.setAttribute('aria-pressed', String(button === filter)));
+    updateSkillSearch();
+  });
+});
+
+skillSearch.addEventListener('input', updateSkillSearch);
+
+const themeToggle = document.querySelector('.theme-toggle');
+const applyTheme = theme => {
+  const isLight = theme === 'light';
+  document.body.classList.toggle('light-theme', isLight);
+  themeToggle.textContent = isLight ? 'Dark theme' : 'Light theme';
+  themeToggle.setAttribute('aria-pressed', String(isLight));
+};
+
+const savedTheme = localStorage.getItem('portfolio-theme');
+applyTheme(savedTheme || 'dark');
+
+themeToggle.addEventListener('click', () => {
+  const nextTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
+  applyTheme(nextTheme);
+  localStorage.setItem('portfolio-theme', nextTheme);
+});
+
+const resumeDownload = document.querySelector('.primary[download]');
+const downloadLabel = resumeDownload.querySelector('.download-label');
+
+resumeDownload.addEventListener('click', () => {
+  downloadLabel.textContent = 'Resume Downloading';
+  window.setTimeout(() => {
+    downloadLabel.textContent = 'Download Resume';
+  }, 1800);
+});
 </script>
 
 </body>
