@@ -562,6 +562,30 @@ body.light-theme .company-summary{
   padding-left:20px;
 }
 
+.skill-card li[data-description]{
+  cursor:help;
+}
+
+.skill-card li[data-description]::after{
+  content:attr(data-description);
+  display:none;
+  margin-left:8px;
+  color:var(--muted);
+  font-size:.78rem;
+  font-style:italic;
+}
+
+.skill-card li[data-description]:hover::after,
+.skill-card li[data-description]:focus::after,
+.skill-card li[data-description].is-detail-open::after{
+  display:inline;
+}
+
+.skill-card li[data-description]:focus-visible{
+  outline:1px solid var(--accent);
+  outline-offset:2px;
+}
+
 .tool-logo{
   width:18px;
   height:18px;
@@ -1154,9 +1178,9 @@ engineering leadership.
 <li><img class="tool-logo dark-tool-logo" src="assets/images/practitest.png" alt="">PractiTest</li>
 <li><img class="tool-logo" src="assets/images/zephyr.png" alt="">Zephyr</li>
 <li>Kanban</li>
-<li><img class="tool-logo" src="assets/images/pylint.png" alt="">Pylint</li>
-<li><img class="tool-logo" src="assets/images/robocop.png" alt="">Robocop</li>
-<li><img class="tool-logo" src="assets/images/robotidy.png" alt="">Robotidy</li>
+<li><img class="tool-logo dark-tool-logo" src="assets/images/pylint.png" alt="">Pylint</li>
+<li><img class="tool-logo dark-tool-logo" src="assets/images/robocop.png" alt="">Robocop</li>
+<li><img class="tool-logo dark-tool-logo" src="assets/images/robotidy.png" alt="">Robotidy</li>
 </ul>
 </div>
 
@@ -1189,8 +1213,8 @@ engineering leadership.
 <ul>
 <li><img class="tool-logo" src="assets/images/cura.png" alt="">Cura</li>
 <li><img class="tool-logo dark-tool-logo" src="assets/images/sketchup.svg" alt="">SketchUp</li>
-<li><img class="tool-logo" src="assets/images/openbuilds.png" alt="">OpenBuilds</li>
-<li><img class="tool-logo" src="assets/images/universal-gcode-sender.png" alt="">Universal Gcode Sender</li>
+<li><img class="tool-logo dark-tool-logo" src="assets/images/openbuilds.png" alt="">OpenBuilds</li>
+<li><img class="tool-logo dark-tool-logo" src="assets/images/universal-gcode-sender.png" alt="">Universal Gcode Sender</li>
 </ul>
 </div>
 
@@ -1519,6 +1543,8 @@ const updateSkillSearch = () => {
   skillSearchStatus.textContent = query
     ? `${visibleSkills} skill area${visibleSkills === 1 ? '' : 's'} and ${relatedExperience} related experience entr${relatedExperience === 1 ? 'y' : 'ies'} found.`
     : '';
+
+  initializeSkillDetails();
 };
 
 skillFilters.forEach(filter => {
@@ -1530,6 +1556,80 @@ skillFilters.forEach(filter => {
 });
 
 skillSearch.addEventListener('input', updateSkillSearch);
+
+const skillDescriptions = {
+  'Robot Framework':'Keyword-driven test automation framework.',
+  'Python':'Scripting language for reusable automation utilities.',
+  'Selenium':'Browser automation for web UI testing.',
+  'Cypress':'End-to-end testing for modern web applications.',
+  'Appium':'Mobile application automation across platforms.',
+  'GitHub Copilot':'AI assistant for coding and test development.',
+  'Microsoft Copilot':'AI assistance for analysis and productivity.',
+  'LLM Test Generation':'AI-generated test ideas and scenarios.',
+  'LLM-based Robot Framework and Python automation generation':'LLM support for generating automation assets.',
+  'AI Test Analysis':'AI-assisted interpretation of test outcomes.',
+  'AI-assisted requirements analysis':'AI support for clarifying testable requirements.',
+  'AI Defect Analysis':'AI-assisted defect triage and pattern analysis.',
+  'Visual Testing':'Validation of visual UI changes and regressions.',
+  'Jenkins':'CI server for automated build and test pipelines.',
+  'Docker':'Containerized environments for consistent execution.',
+  'Git':'Distributed version control for source code.',
+  'GitHub':'Repository collaboration and code review platform.',
+  'SourceTree':'Graphical client for Git repository workflows.',
+  'Bitbucket':'Git repository hosting and team collaboration.',
+  'API Testing':'Validation of service behavior and integrations.',
+  'Postman and REST APIs':'API request testing and REST service validation.',
+  'Performance Testing':'Measures responsiveness, scalability, and stability.',
+  'Functional Testing':'Checks software behavior against requirements.',
+  'Regression Testing':'Confirms changes do not break existing behavior.',
+  'Smoke, load and memory-leak testing':'Early health, capacity, and stability checks.',
+  'KPI/stability and alpha/beta testing':'Measures product quality through release stages.',
+  'User Acceptance Testing (UAT)':'Validates readiness with business users.',
+  'Test design, test creation and automation architecture':'Designs maintainable, high-signal test coverage.',
+  'Test management, bug tracking, continuous integration and code-quality control':'Coordinates quality work from planning through delivery.',
+  'Jira':'Issue tracking and Agile project management.',
+  'Bugzilla':'Defect tracking and issue reporting.',
+  'Jama':'Requirements, traceability, and quality management.',
+  'Confluence':'Team documentation and knowledge sharing.',
+  'TestRail':'Test case management and execution reporting.',
+  'PractiTest':'Test management and quality analytics.',
+  'Zephyr':'Test planning, execution, and reporting.',
+  'Kanban':'Visual workflow management with work-in-progress limits.',
+  'Pylint':'Static analysis and code-quality checks for Python.',
+  'Robocop':'Quality checks and linting for Robot Framework.',
+  'Robotidy':'Formatting and standardization for Robot Framework.',
+  'Windows':'Desktop operating system test environment.',
+  'Linux (Debian)':'Linux-based automation and test environment.',
+  'Android':'Mobile operating system testing platform.',
+  'iOS':'Apple mobile operating system testing platform.',
+  'POS':'Point-of-sale device and payment workflow testing.',
+  'WebOS':'Smart TV and embedded application platform.',
+  'TV':'Connected-TV and media-device testing environment.',
+  'Agile':'Iterative delivery with continuous feedback.',
+  'Waterfall':'Sequential delivery model for planned projects.',
+  'Scrum':'Sprint-based Agile delivery framework.',
+  'SAFe':'Scaled Agile framework for enterprise delivery.',
+  'Cura':'3D-print slicing and print-preparation software.',
+  'SketchUp':'3D modeling and design software.',
+  'OpenBuilds':'CNC machine control and build ecosystem.',
+  'Universal Gcode Sender':'Cross-platform CNC G-code sender.'
+};
+
+const initializeSkillDetails = () => {
+  document.querySelectorAll('.skill-card li').forEach(item => {
+    const skillName = item.textContent.trim();
+    const category = item.closest('.skill-card').querySelector('h3').textContent;
+    item.dataset.description = skillDescriptions[skillName] || `${category} capability used in quality engineering delivery.`;
+    item.tabIndex = 0;
+  });
+};
+
+document.querySelector('.skills-grid').addEventListener('click', event => {
+  const item = event.target.closest('li[data-description]');
+  if (item) item.classList.toggle('is-detail-open');
+});
+
+initializeSkillDetails();
 
 const themeToggle = document.querySelector('.theme-toggle');
 const themeLabel = themeToggle.querySelector('.theme-label');
