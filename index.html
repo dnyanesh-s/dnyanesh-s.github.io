@@ -481,6 +481,27 @@ body.light-theme .company-summary{
   gap:20px;
 }
 
+@media(min-width:900px){
+  .skills-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .skill-card[data-layout="ai"]{
+    grid-column:1;
+    grid-row:1;
+  }
+
+  .skill-card[data-layout="testing"]{
+    grid-column:2;
+    grid-row:1;
+  }
+
+  .skill-card[data-layout="ai"],
+  .skill-card[data-layout="testing"]{
+    align-self:start;
+  }
+}
+
 .skill-card{
   background:var(--card);
   padding:25px;
@@ -491,6 +512,32 @@ body.light-theme .company-summary{
 
 .skill-card ul{
   padding-left:20px;
+}
+
+.tool-logo{
+  width:18px;
+  height:18px;
+  margin-right:8px;
+  vertical-align:-4px;
+  object-fit:contain;
+}
+
+.robot-framework-logo{
+  padding:2px;
+  border-radius:3px;
+  background:#ffffff;
+}
+
+.github-copilot-logo{
+  padding:2px;
+  border-radius:3px;
+  background:#ffffff;
+}
+
+.dark-tool-logo{
+  padding:2px;
+  border-radius:3px;
+  background:#ffffff;
 }
 
 .skill-filters{
@@ -998,18 +1045,19 @@ engineering leadership.
 <div class="skill-card" data-category="automation">
 <h3>Automation</h3>
 <ul>
-<li>Robot Framework</li>
-<li>Python</li>
-<li>Selenium</li>
-<li>Cypress</li>
-<li>Appium</li>
+<li><img class="tool-logo robot-framework-logo" src="https://cdn.simpleicons.org/robotframework" alt="">Robot Framework</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="">Python</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg" alt="">Selenium</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cypressio/cypressio-original.svg" alt="">Cypress</li>
+<li><img class="tool-logo" src="https://cdn.simpleicons.org/appium" alt="">Appium</li>
 </ul>
 </div>
 
-<div class="skill-card" data-category="ai">
+<div class="skill-card" data-category="ai" data-layout="ai">
 <h3>AI & Innovation</h3>
 <ul>
-<li>GitHub Copilot</li>
+<li><img class="tool-logo github-copilot-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="">GitHub Copilot</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows8/windows8-original.svg" alt="">Microsoft Copilot</li>
 <li>LLM Test Generation</li>
 <li>LLM-based Robot Framework and Python automation generation</li>
 <li>AI Test Analysis</li>
@@ -1022,46 +1070,79 @@ engineering leadership.
 <div class="skill-card" data-category="delivery">
 <h3>CI/CD</h3>
 <ul>
-<li>Jenkins</li>
-<li>Docker</li>
-<li>Git</li>
-<li>SourceTree</li>
-<li>Bitbucket</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg" alt="">Jenkins</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="">Docker</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="">Git</li>
+<li><img class="tool-logo github-copilot-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="">GitHub</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sourcetree/sourcetree-original.svg" alt="">SourceTree</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bitbucket/bitbucket-original.svg" alt="">Bitbucket</li>
 </ul>
 </div>
 
-<div class="skill-card" data-category="testing">
+<div class="skill-card" data-category="testing" data-layout="testing">
 <h3>Testing</h3>
 <ul>
 <li>API Testing</li>
-<li>Postman and REST APIs</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" alt="">Postman and REST APIs</li>
 <li>Performance Testing</li>
 <li>Functional Testing</li>
 <li>Regression Testing</li>
 <li>Smoke, load and memory-leak testing</li>
 <li>KPI/stability and alpha/beta testing</li>
-<li>UAT</li>
+<li>User Acceptance Testing (UAT)</li>
 <li>Test design, test creation and automation architecture</li>
 <li>Test management, bug tracking, continuous integration and code-quality control</li>
 </ul>
 </div>
 
 <div class="skill-card" data-category="delivery">
-<h3>Tools & Platforms</h3>
+<h3>Quality Tools</h3>
 <ul>
-<li>Jira, Bugzilla, Jama and Confluence</li>
-<li>TestRail, PractiTest, Zephyr and Kanban</li>
-<li>Pylint, Robocop and Robotidy</li>
-<li>Windows, Linux (Debian), Android, iOS, POS, WebOS and TV</li>
-<li>Agile, Waterfall, Scrum, Kanban and SAFe</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg" alt="">Jira</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=bugzilla.org&amp;sz=64" alt="">Bugzilla</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=jamasoftware.com&amp;sz=64" alt="">Jama</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/confluence/confluence-original.svg" alt="">Confluence</li>
+<li><img class="tool-logo dark-tool-logo" src="https://cdn.simpleicons.org/testrail" alt="">TestRail</li>
+<li><img class="tool-logo dark-tool-logo" src="https://www.google.com/s2/favicons?domain=practitest.com&amp;sz=64" alt="">PractiTest</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=smartbear.com&amp;sz=64" alt="">Zephyr</li>
+<li>Kanban</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=pylint.pycqa.org&amp;sz=64" alt="">Pylint</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=robocop.readthedocs.io&amp;sz=64" alt="">Robocop</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=robotidy.readthedocs.io&amp;sz=64" alt="">Robotidy</li>
+</ul>
+</div>
+
+<div class="skill-card" data-category="delivery">
+<h3>Platforms</h3>
+<ul>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows8/windows8-original.svg" alt="">Windows</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg" alt="">Linux (Debian)</li>
+<li><img class="tool-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/android/android-original.svg" alt="">Android</li>
+<li><img class="tool-logo github-copilot-logo" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg" alt="">iOS</li>
+<li>POS</li>
+<li>WebOS</li>
+<li>TV</li>
+</ul>
+</div>
+
+<div class="skill-card" data-category="delivery">
+<h3>Ways of Working</h3>
+<ul>
+<li>Agile</li>
+<li>Waterfall</li>
+<li>Scrum</li>
+<li>Kanban</li>
+<li>SAFe</li>
 </ul>
 </div>
 
 <div class="skill-card" data-category="automation">
 <h3>3D &amp; CNC Automation</h3>
 <ul>
-<li>Cura and SketchUp</li>
-<li>OpenBuilds and Universal Gcode Sender</li>
+<li><img class="tool-logo" src="https://github.com/Ultimaker/Cura/raw/main/resources/images/cura-icon.png" alt="">Cura</li>
+<li><img class="tool-logo dark-tool-logo" src="https://cdn.simpleicons.org/sketchup" alt="">SketchUp</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=openbuilds.com&amp;sz=64" alt="">OpenBuilds</li>
+<li><img class="tool-logo" src="https://www.google.com/s2/favicons?domain=winder.github.io&amp;sz=64" alt="">Universal Gcode Sender</li>
 </ul>
 </div>
 
