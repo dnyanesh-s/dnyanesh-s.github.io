@@ -491,6 +491,32 @@ body.light-theme .company-summary{
   white-space:nowrap;
 }
 
+.role-disclosure{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-left:10px;
+  padding:4px 7px;
+  border:1px solid var(--line);
+  border-radius:5px;
+  color:var(--accent);
+  font-size:.76rem;
+  font-weight:600;
+  line-height:1;
+  transition:border-color .2s ease,background .2s ease,color .2s ease;
+}
+
+.role-header:hover .role-disclosure,
+.role-header:focus-visible .role-disclosure{
+  border-color:var(--accent);
+  background:rgba(6,182,212,.1);
+}
+
+.role-header:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:4px;
+}
+
 .role ul{
   margin-top:12px;
   padding-left:20px;
@@ -506,7 +532,6 @@ body.light-theme .company-summary{
 
 .role-toggle-icon{
   display:inline-block;
-  margin-left:8px;
   color:var(--accent);
   transition:transform .2s ease;
 }
@@ -671,8 +696,19 @@ body.light-theme .skill-search input{
 mark{
   padding:0 2px;
   border-radius:2px;
-  background:rgba(6,182,212,.3);
-  color:inherit;
+  background:var(--accent);
+  color:#020617;
+  box-shadow:0 0 0 1px rgba(248,250,252,.42),0 0 10px rgba(6,182,212,.5);
+}
+
+.skill-card li.is-search-match{
+  width:fit-content;
+  max-width:100%;
+  margin:3px 0;
+  padding:2px 6px;
+  border-left:3px solid var(--accent);
+  border-radius:2px;
+  background:rgba(6,182,212,.16);
 }
 
 .experience-search-match{
@@ -1051,7 +1087,7 @@ engineering leadership.
 <div class="timeline-item">
 <h3>Softability Oy</h3>
 <div class="role">
-<button class="role-header" type="button" aria-expanded="true"><strong>Team Lead</strong><span class="role-date">Jan 2025 – Present <span class="role-toggle-icon" aria-hidden="true">⌄</span></span></button>
+<button class="role-header" type="button" aria-expanded="true"><strong>Team Lead</strong><span class="role-date">Jan 2025 – Present <span class="role-disclosure"><span class="role-disclosure-label">Hide details</span><span class="role-toggle-icon" aria-hidden="true">⌄</span></span></span></button>
 <div class="role-details"><ul>
 <li>Technical leadership and mentoring</li>
 <li>Performance discussions and onboarding</li>
@@ -1064,7 +1100,7 @@ engineering leadership.
 </div>
 
 <div class="role">
-<button class="role-header" type="button" aria-expanded="true"><strong>Senior Test Automation Engineer</strong><span class="role-date">May 2024 – Present <span class="role-toggle-icon" aria-hidden="true">⌄</span></span></button>
+<button class="role-header" type="button" aria-expanded="true"><strong>Senior Test Automation Engineer</strong><span class="role-date">May 2024 – Present <span class="role-disclosure"><span class="role-disclosure-label">Hide details</span><span class="role-toggle-icon" aria-hidden="true">⌄</span></span></span></button>
 <div class="role-details"><ul>
 <li>Automation architecture</li>
 <li>AI testing initiatives</li>
@@ -1077,17 +1113,26 @@ engineering leadership.
 </div>
 
 <div class="role">
-<button class="role-header" type="button" aria-expanded="true"><strong>Test Automation Engineer</strong><span class="role-date">May 2022 – June 2024 <span class="role-toggle-icon" aria-hidden="true">⌄</span></span></button>
+<button class="role-header" type="button" aria-expanded="true"><strong>Test Automation Engineer</strong><span class="role-date">May 2022 – June 2024 <span class="role-disclosure"><span class="role-disclosure-label">Hide details</span><span class="role-toggle-icon" aria-hidden="true">⌄</span></span></span></button>
 <div class="role-details"><ul>
-<li>Robot Framework solutions</li>
+<li>Developed reusable Robot Framework solutions used across multiple projects and environments.</li>
 <li>CI/CD implementation</li>
 <li>Quality gate introduction</li>
-<li>Created and optimized Jenkins pipelines and test workflows</li>
+<li>Created and optimized Jenkins pipelines, introducing quality gates and improving automation reliability.</li>
 <li>Improved legacy codebases for maintainability and onboarding</li>
 <li>Contributed to Konecranes crane control system testing and automation</li>
+<li>Reusable automation framework</li>
+<li>Quality gates</li>
+<li>Jenkins pipeline improvements</li>
+<li>Legacy code modernization</li>
 <li>Implemented report management for clearer progress and issue tracking</li>
 <li>Introduced automation tools and parallel execution processes to improve team productivity</li>
 <li>Validated KONE elevator-control software as part of a System Integration Testing team</li>
+<li>System Integration Testing</li>
+<li>Elevator Control Software</li>
+<li>Manual integration testing</li>
+<li>Defect verification</li>
+<li>End-to-end testing</li>
 <li>Designed and executed system and integration test cases, including end-to-end testing and defect verification</li>
 </ul></div>
 </div>
@@ -1271,6 +1316,10 @@ engineering leadership.
 <div class="card">Technical Training</div>
 <div class="card">Onboarding</div>
 <div class="card">Project Delivery</div>
+<div class="card">One-on-one Feedback Sessions</div>
+<div class="card">Career Guidance</div>
+<div class="card">Point of Contact for Team Members</div>
+<div class="card">Securing Projects Through Client POCs</div>
 
 </div>
 
@@ -1433,10 +1482,14 @@ engineering leadership.
 </section>
 
 <footer>
-© 2026 Dnyaneshwar Suryawanshi
+&copy; <span id="copyright-year">2026</span> Dnyaneshwar Suryawanshi
+<br>
+Quality Engineering • Test Automation • Technical Leadership
 </footer>
 
 <script>
+document.querySelector('#copyright-year').textContent = new Date().getFullYear();
+
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 const homeLink = document.querySelector('.logo');
@@ -1555,6 +1608,7 @@ document.querySelectorAll('.role-header').forEach(toggle => {
     const role = toggle.closest('.role');
     const isCollapsed = role.classList.toggle('is-collapsed');
     toggle.setAttribute('aria-expanded', String(!isCollapsed));
+    toggle.querySelector('.role-disclosure-label').textContent = isCollapsed ? 'Show details' : 'Hide details';
   });
 });
 
@@ -1565,22 +1619,27 @@ const skillSearchStatus = document.querySelector('#skill-search-status');
 const experienceEntries = [...document.querySelectorAll('#experience .role, #experience .company-summary')];
 let selectedSkillFilter = 'all';
 
-const escapeHtml = value => value.replace(/[&<>'"]/g, character => ({
-  '&':'&amp;',
-  '<':'&lt;',
-  '>':'&gt;',
-  "'":'&#39;',
-  '"':'&quot;'
-}[character]));
-
 const highlightText = (element, query) => {
-  if (!element.dataset.searchText) element.dataset.searchText = element.innerHTML;
-  if (!query) {
-    element.innerHTML = element.dataset.searchText;
-    return;
-  }
+  element.querySelectorAll('mark').forEach(mark => mark.replaceWith(mark.textContent));
+  if (!query) return;
+
   const pattern = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-  element.innerHTML = element.dataset.searchText.replace(pattern, '<mark>$1</mark>');
+  const textNodes = [];
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+  let textNode;
+
+  while (textNode = walker.nextNode()) textNodes.push(textNode);
+
+  textNodes.forEach(node => {
+    const fragments = node.textContent.split(pattern);
+    if (fragments.length === 1) return;
+
+    const replacement = document.createDocumentFragment();
+    fragments.forEach((fragment, index) => {
+      replacement.append(index % 2 ? Object.assign(document.createElement('mark'), {textContent:fragment}) : document.createTextNode(fragment));
+    });
+    node.replaceWith(replacement);
+  });
 };
 
 const updateSkillSearch = () => {
@@ -1594,6 +1653,9 @@ const updateSkillSearch = () => {
     const matchesSearch = !normalizedQuery || card.textContent.toLowerCase().includes(normalizedQuery);
     card.classList.toggle('is-filtered-out', !matchesFilter || !matchesSearch);
     highlightText(card, query);
+    card.querySelectorAll('li').forEach(item => {
+      item.classList.toggle('is-search-match', Boolean(normalizedQuery) && item.textContent.toLowerCase().includes(normalizedQuery));
+    });
     if (matchesFilter && matchesSearch) visibleSkills += 1;
   });
 

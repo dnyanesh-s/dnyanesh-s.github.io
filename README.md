@@ -8,8 +8,11 @@ https://dnyanesh-s.github.io/
 
 ## Contents
 
-- Professional experience and client domains
+- Professional experience with expandable role details
 - Technical skills, tools, and platforms
+- Searchable and filterable skills with matched-term highlighting
+- Light and dark theme toggle
+- Client cards with hover, focus, and tap details
 - Education and certifications
 - Blog links and contact details
 - Downloadable resume
@@ -22,6 +25,7 @@ Open `index.html` in a browser.
 
 - HTML, CSS, and JavaScript
 - Hosted with GitHub Pages
+- No build step or local server required
 
 ## Contact
 
