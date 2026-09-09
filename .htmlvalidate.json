@@ -1,5 +1,5 @@
 {
   "rules": {
-    "long-title": ["error", { "max-length": 80 }]
+    "long-title": ["error", { "maxlength": 80 }]
   }
 }
