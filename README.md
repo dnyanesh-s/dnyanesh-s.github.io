@@ -21,6 +21,15 @@ https://dnyanesh-s.github.io/
 
 Open `index.html` in a browser.
 
+## Quality Checks
+
+GitHub Actions runs on pull requests to `main` and direct pushes to `main`.
+
+- **HTML lint:** Validates `index.html` with `html-validate`.
+- **Link check:** Validates links in all HTML files with Lychee.
+
+To require these checks before code reaches `main`, enable branch protection in the repository settings and require the `HTML lint` and `Link check` status checks before merging.
+
 ## Built With
 
 - HTML, CSS, and JavaScript
