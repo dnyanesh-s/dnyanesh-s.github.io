@@ -1,0 +1,5 @@
+{
+  "rules": {
+    "long-title": ["error", { "max-length": 80 }]
+  }
+}
