@@ -693,6 +693,10 @@ body.light-theme .skill-search input{
   display:none;
 }
 
+.mobile-leadership-hint{
+  display:none;
+}
+
 mark{
   padding:0 2px;
   border-radius:2px;
@@ -765,6 +769,36 @@ mark{
 .client-card.is-domain-open .client-domain{
   opacity:1;
   transform:none;
+}
+
+.leadership-card{
+  min-height:116px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:8px;
+  cursor:default;
+}
+
+.leadership-card p{
+  color:var(--muted);
+  font-size:.88rem;
+  opacity:0;
+  transform:translateY(5px);
+  transition:opacity .2s ease,transform .2s ease;
+}
+
+.leadership-card:hover p,
+.leadership-card:focus p,
+.leadership-card:focus-within p,
+.leadership-card.is-description-open p{
+  opacity:1;
+  transform:none;
+}
+
+.leadership-card:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
 }
 
 .contact-actions{
@@ -894,6 +928,15 @@ section:not(.hero) > .container.is-visible{
     }
 
     .mobile-client-hint{
+      display:block;
+      margin:-2px 0 18px;
+      color:var(--accent);
+      font-size:.82rem;
+      font-weight:600;
+      text-align:center;
+    }
+
+    .mobile-leadership-hint{
       display:block;
       margin:-2px 0 18px;
       color:var(--accent);
@@ -1312,17 +1355,54 @@ engineering leadership.
 
 <h2 class="title">Leadership</h2>
 
+<p class="mobile-leadership-hint">Tap to view more details.</p>
+
 <div class="grid">
 
-<div class="card">Team Management</div>
-<div class="card">Mentoring Engineers</div>
-<div class="card">Technical Training</div>
-<div class="card">Onboarding</div>
-<div class="card">Project Delivery</div>
-<div class="card">One-on-one Feedback Sessions</div>
-<div class="card">Career Guidance</div>
-<div class="card">Point of Contact for Team Members</div>
-<div class="card">Securing Projects Through Client POCs</div>
+<div class="card leadership-card" tabindex="0">
+<h3>Team Management</h3>
+<p>Lead Android, Web UI, and API automation teams by coordinating priorities, supporting delivery, and keeping technical work aligned with client and project needs.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Mentoring Engineers</h3>
+<p>Provide technical guidance, knowledge transfer, and peer support to help engineers build maintainable Robot Framework and Python automation solutions.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Technical Training</h3>
+<p>Deliver training, seminars, webinars, and technical sessions covering AI, test automation, Robot Framework, and practical quality engineering workflows.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Onboarding</h3>
+<p>Help new team members ramp up through structured training, project context, knowledge sharing, and guidance on existing automation frameworks and codebases.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Project Delivery</h3>
+<p>Support project planning and execution through automation architecture, CI/CD improvements, quality gates, parallel execution, reporting, and stakeholder communication.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>One-on-one Feedback Sessions</h3>
+<p>Hold performance discussions and regular feedback conversations that clarify expectations, recognize progress, and identify practical areas for development.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Career Guidance</h3>
+<p>Help engineers grow by discussing technical direction, learning priorities, automation practices, and the experience needed to take on broader responsibilities.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Point of Contact for Team Members</h3>
+<p>Act as a dependable connection between team members, clients, and project stakeholders, helping remove blockers and keep communication clear.</p>
+</div>
+
+<div class="card leadership-card" tabindex="0">
+<h3>Securing Projects Through Client POCs</h3>
+<p>Lead client proofs of concept and demonstrations that show practical automation capabilities, testing outcomes, and solutions adaptable to new environments.</p>
+</div>
 
 </div>
 
@@ -1770,6 +1850,22 @@ clientCards.forEach(card => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
     toggleClientDomain(card);
+  });
+});
+
+const leadershipCards = [...document.querySelectorAll('.leadership-card')];
+const toggleLeadershipDescription = card => {
+  const shouldOpen = !card.classList.contains('is-description-open');
+  leadershipCards.forEach(item => item.classList.remove('is-description-open'));
+  card.classList.toggle('is-description-open', shouldOpen);
+};
+
+leadershipCards.forEach(card => {
+  card.addEventListener('click', () => toggleLeadershipDescription(card));
+  card.addEventListener('keydown', event => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
+    toggleLeadershipDescription(card);
   });
 });
 
