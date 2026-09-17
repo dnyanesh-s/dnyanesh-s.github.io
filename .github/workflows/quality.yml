@@ -130,7 +130,7 @@ jobs:
               references.extend((source, reference) for reference in found)
 
           missing = []
-            for source, reference in references:
+          for source, reference in references:
               if reference.startswith(("#", "/", "//", "http:", "https:", "mailto:", "tel:", "data:")):
                   continue
               target = (source.parent / reference.split("#", 1)[0].split("?", 1)[0]).resolve()

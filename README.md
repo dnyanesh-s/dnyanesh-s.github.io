@@ -4,7 +4,7 @@ Personal portfolio website for Dnyaneshwar Suryawanshi, Team Lead and Senior Tes
 
 ## Live Site
 
-https://dnyanesh-s.github.io/
+[https://dnyanesh-s.github.io/](https://dnyanesh-s.github.io/)
 
 ## Contents
 
@@ -43,8 +43,8 @@ To require these checks before code reaches `main`, enable branch protection in 
 
 ## Contact
 
-- Email: dnyaneshwar1995@gmail.com
-- LinkedIn: https://www.linkedin.com/in/dnyaneshwar-suryawanshi-a5a15918a/
+- Email: [dnyaneshwar1995@gmail.com](mailto:dnyaneshwar1995@gmail.com)
+- LinkedIn: [dnyaneshwar-suryawanshi-a5a15918a](https://www.linkedin.com/in/dnyaneshwar-suryawanshi-a5a15918a/)
 
 ## License
 
