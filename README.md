@@ -27,8 +27,13 @@ GitHub Actions runs on pull requests to `main` and direct pushes to `main`.
 
 - **HTML lint:** Validates `index.html` with `html-validate`.
 - **Link check:** Validates links in all HTML files with Lychee.
+- **JavaScript lint:** Checks browser JavaScript for undefined and unused variables with ESLint.
+- **CSS lint:** Checks CSS syntax and duplicate declarations with Stylelint.
+- **JSON validation:** Parses every JSON configuration file with Python.
+- **Markdown lint:** Checks Markdown files with markdownlint.
+- **Local asset check:** Verifies local HTML and CSS asset references exist.
 
-To require these checks before code reaches `main`, enable branch protection in the repository settings and require the `HTML lint` and `Link check` status checks before merging.
+To require these checks before code reaches `main`, enable branch protection in the repository settings and require all quality check status checks before merging.
 
 ## Built With
 

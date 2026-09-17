@@ -39,3 +39,103 @@ jobs:
         with:
           args: --verbose --no-progress --exclude '^mailto:' --exclude '^tel:' --exclude '^https://www\.linkedin\.com/' './**/*.html'
           fail: true
+
+  javascript:
+    name: JavaScript lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Lint JavaScript
+        run: >-
+          npx --yes eslint@8.57.1 --no-eslintrc --env browser,es2021
+          --rule 'no-undef:error' --rule 'no-unused-vars:error'
+          assets/js/**/*.js
+
+  css:
+    name: CSS lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Lint CSS
+        run: npx --yes stylelint@16.11.0 "assets/css/**/*.css"
+
+  json:
+    name: JSON validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate JSON files
+        run: >-
+          python -c "import json, pathlib; [json.loads(path.read_text()) for path in pathlib.Path('.').rglob('*.json')]"
+
+  markdown:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Lint Markdown
+        run: npx --yes markdownlint-cli2@0.17.2 "**/*.md"
+
+  assets:
+    name: Local asset check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check local asset references
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          root = Path.cwd()
+          source_files = list(root.rglob("*.html")) + list(root.rglob("*.css"))
+          references = []
+
+          for source in source_files:
+              text = source.read_text(encoding="utf-8")
+              if source.suffix == ".html":
+                found = re.findall(r"(?:src|href)=['\"]([^'\"]+)['\"]", text)
+              else:
+                found = re.findall(r"url\((?:['\"]?)([^)'\"]+)", text)
+              references.extend((source, reference) for reference in found)
+
+          missing = []
+            for source, reference in references:
+              if reference.startswith(("#", "/", "//", "http:", "https:", "mailto:", "tel:", "data:")):
+                  continue
+              target = (source.parent / reference.split("#", 1)[0].split("?", 1)[0]).resolve()
+              if not target.is_file():
+                  missing.append(reference)
+
+          if missing:
+              raise SystemExit("Missing local assets: " + ", ".join(sorted(set(missing))))
