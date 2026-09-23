@@ -17,9 +17,31 @@ Personal portfolio website for Dnyaneshwar Suryawanshi, Team Lead and Senior Tes
 - Blog links and contact details
 - Downloadable resume
 
-## Local Preview
+## Installation and Local Development
 
-Open `index.html` in a browser.
+This is a static site and has no runtime dependencies or build step.
+
+```bash
+git clone https://github.com/dnyanesh-s/dnyanesh-s.github.io.git
+cd dnyanesh-s.github.io
+```
+
+For a quick preview, open `index.html` directly in a browser. To use a local
+web server instead, run:
+
+```bash
+python -m http.server 8000
+```
+
+Then visit <http://localhost:8000>.
+
+To run the same checks used by GitHub Actions locally, use the commands below:
+
+```bash
+npx --yes html-validate@9.7.1 index.html
+npx --yes stylelint@16.11.0 "assets/css/**/*.css"
+npx --yes markdownlint-cli2@0.17.2 "**/*.md"
+```
 
 ## Quality Checks
 

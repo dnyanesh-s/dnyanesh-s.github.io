@@ -668,12 +668,31 @@ body.light-theme .skill-search input{
   display:none;
 }
 
-.mobile-client-hint{
+.card-detail-hint{
+  display:block;
+  margin:0;
+  color:rgba(148,163,184,.8);
+  font-size:.46rem;
+  font-weight:500;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  line-height:1;
+  opacity:1;
+  transform:none;
+  transition:opacity .2s ease,transform .2s ease;
+}
+
+.web-hint,
+.mobile-hint{
   display:none;
 }
 
-.mobile-leadership-hint{
-  display:none;
+@media (min-width:769px){
+  .web-hint{ display:block; }
+}
+
+@media (max-width:768px){
+  .mobile-hint{ display:block; }
 }
 
 mark{
@@ -722,57 +741,82 @@ mark{
 }
 
 .client-card{
-  min-height:116px;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  gap:8px;
+  gap:2px;
   cursor:default;
-}
-
-.client-domain{
-  color:var(--muted);
-  font-size:.85rem;
-  opacity:0;
-  transform:translateY(5px);
-  transition:opacity .2s ease,transform .2s ease;
 }
 
 .client-card:hover .client-domain,
 .client-card:focus .client-domain,
-.client-card:focus-within .client-domain{
-  opacity:1;
-  transform:none;
-}
-
-.client-card.is-domain-open .client-domain{
-  opacity:1;
-  transform:none;
-}
-
-.leadership-card{
-  min-height:116px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:8px;
-  cursor:default;
-}
-
-.leadership-card p{
-  color:var(--muted);
-  font-size:.88rem;
-  opacity:0;
-  transform:translateY(5px);
-  transition:opacity .2s ease,transform .2s ease;
-}
-
+.client-card:focus-within .client-domain,
+.client-card.is-domain-open .client-domain,
 .leadership-card:hover p,
 .leadership-card:focus p,
 .leadership-card:focus-within p,
 .leadership-card.is-description-open p{
   opacity:1;
   transform:none;
+  max-height:200px;
+}
+
+.client-card:hover .card-detail-hint,
+.client-card:focus .card-detail-hint,
+.client-card:focus-within .card-detail-hint,
+.client-card.is-domain-open .card-detail-hint,
+.leadership-card:hover .card-detail-hint,
+.leadership-card:focus .card-detail-hint,
+.leadership-card:focus-within .card-detail-hint,
+.leadership-card.is-description-open .card-detail-hint{
+  margin-top:10px;
+  font-size:.56rem;
+  letter-spacing:.16em;
+  opacity:0;
+  transform:translateY(-4px);
+}
+
+.client-domain,
+.leadership-card p{
+  color:var(--muted);
+  font-size:.85rem;
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  transform:translateY(5px);
+  transition:max-height .2s ease,opacity .2s ease,transform .2s ease;
+}
+
+.leadership-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:2px;
+  cursor:default;
+}
+
+.leadership-card:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+
+@media (hover: hover) and (pointer: fine){
+  .client-card .card-detail-hint,
+  .leadership-card .card-detail-hint {
+    opacity:1;
+  }
+
+  .client-card:hover .card-detail-hint,
+  .client-card:focus .card-detail-hint,
+  .client-card:focus-within .card-detail-hint,
+  .client-card.is-domain-open .card-detail-hint,
+  .leadership-card:hover .card-detail-hint,
+  .leadership-card:focus .card-detail-hint,
+  .leadership-card:focus-within .card-detail-hint,
+  .leadership-card.is-description-open .card-detail-hint{
+    opacity:0;
+    transform:translateY(-4px);
+  }
 }
 
 .leadership-card:focus-visible{
@@ -898,24 +942,6 @@ section:not(.hero) > .container.is-visible{
     }
 
     .mobile-skill-hint{
-      display:block;
-      margin:-2px 0 18px;
-      color:var(--accent);
-      font-size:.82rem;
-      font-weight:600;
-      text-align:center;
-    }
-
-    .mobile-client-hint{
-      display:block;
-      margin:-2px 0 18px;
-      color:var(--accent);
-      font-size:.82rem;
-      font-weight:600;
-      text-align:center;
-    }
-
-    .mobile-leadership-hint{
       display:block;
       margin:-2px 0 18px;
       color:var(--accent);

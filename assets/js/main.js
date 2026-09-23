@@ -265,20 +265,29 @@ document.querySelector('.skills-grid').addEventListener('click', event => {
 });
 
 const clientCards = [...document.querySelectorAll('.client-card')];
+const isDesktopHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
 const toggleClientDomain = card => {
   const shouldOpen = !card.classList.contains('is-domain-open');
   clientCards.forEach(item => item.classList.remove('is-domain-open'));
   card.classList.toggle('is-domain-open', shouldOpen);
 };
 
-clientCards.forEach(card => {
-  card.addEventListener('click', () => toggleClientDomain(card));
-  card.addEventListener('keydown', event => {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    event.preventDefault();
-    toggleClientDomain(card);
+if (isDesktopHover) {
+  clientCards.forEach(card => {
+    card.addEventListener('mouseenter', () => toggleClientDomain(card));
+    card.addEventListener('mouseleave', () => card.classList.remove('is-domain-open'));
   });
-});
+} else {
+  clientCards.forEach(card => {
+    card.addEventListener('click', () => toggleClientDomain(card));
+    card.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      toggleClientDomain(card);
+    });
+  });
+}
 
 const leadershipCards = [...document.querySelectorAll('.leadership-card')];
 const toggleLeadershipDescription = card => {
@@ -287,14 +296,21 @@ const toggleLeadershipDescription = card => {
   card.classList.toggle('is-description-open', shouldOpen);
 };
 
-leadershipCards.forEach(card => {
-  card.addEventListener('click', () => toggleLeadershipDescription(card));
-  card.addEventListener('keydown', event => {
-    if (event.key !== 'Enter' && event.key !== ' ') return;
-    event.preventDefault();
-    toggleLeadershipDescription(card);
+if (isDesktopHover) {
+  leadershipCards.forEach(card => {
+    card.addEventListener('mouseenter', () => toggleLeadershipDescription(card));
+    card.addEventListener('mouseleave', () => card.classList.remove('is-description-open'));
   });
-});
+} else {
+  leadershipCards.forEach(card => {
+    card.addEventListener('click', () => toggleLeadershipDescription(card));
+    card.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      toggleLeadershipDescription(card);
+    });
+  });
+}
 
 initializeSkillDetails();
 
