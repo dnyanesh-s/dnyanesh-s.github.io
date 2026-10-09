@@ -37,7 +37,7 @@ jobs:
       - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress --exclude '^mailto:' --exclude '^tel:' --exclude '^https://www\.linkedin\.com/' './**/*.html'
+          args: --verbose --no-progress --root-dir ${{ github.workspace }} --exclude '^mailto:' --exclude '^tel:' --exclude '^https://www\.linkedin\.com/' './**/*.html'
           fail: true
 
   javascript:
