@@ -397,6 +397,71 @@ document.querySelectorAll('.copy-action').forEach(button => {
   });
 });
 
+const shareBlock = document.querySelector('.share');
+const shareToggle = shareBlock.querySelector('.share-toggle');
+const shareMenu = shareBlock.querySelector('.share-menu');
+const shareCopy = shareBlock.querySelector('.share-copy');
+const shareUrl = 'https://dnyanesh-s.github.io/';
+const shareTitle = 'Dnyaneshwar Suryawanshi | Team Lead & Senior Test Automation Engineer';
+const shareText = 'Have a look at Dnyaneshwar Suryawanshi\'s portfolio:';
+const shareLinks = {
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`,
+  whatsapp: `https://wa.me/?text=${encodeURIComponent(`${shareText} ${shareUrl}`)}`,
+  email: `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(`${shareText}\n${shareUrl}`)}`
+};
+const useNativeShare = Boolean(navigator.share) && window.matchMedia('(pointer: coarse)').matches;
+
+shareBlock.querySelectorAll('[data-share]').forEach(link => {
+  link.href = shareLinks[link.dataset.share];
+});
+
+const setShareMenu = isOpen => {
+  shareMenu.hidden = !isOpen;
+  shareToggle.setAttribute('aria-expanded', String(isOpen));
+};
+
+shareToggle.addEventListener('click', async () => {
+  if (useNativeShare) {
+    try {
+      await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+    } catch {
+      // The visitor closed the share sheet.
+    }
+    return;
+  }
+  setShareMenu(shareMenu.hidden);
+});
+
+shareMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => setShareMenu(false));
+});
+
+shareCopy.addEventListener('click', async () => {
+  try {
+    await copyText(shareUrl);
+    shareCopy.textContent = 'Link copied';
+  } catch {
+    shareCopy.textContent = 'Copy failed';
+  }
+  window.setTimeout(() => {
+    shareCopy.textContent = 'Copy link';
+    setShareMenu(false);
+  }, 1200);
+});
+
+document.addEventListener('click', event => {
+  if (!shareMenu.hidden && !shareBlock.contains(event.target)) setShareMenu(false);
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !shareMenu.hidden) {
+    setShareMenu(false);
+    shareToggle.focus();
+  }
+});
+
+shareBlock.hidden = false;
+
 const analyticsId = 'G-DPGW1NK2TL';
 const consentKey = 'analytics-consent';
 const consentBanner = document.querySelector('.consent-banner');
