@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Page not found | Dnyaneshwar Suryawanshi</title>
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/images/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+
+<main class="hero not-found">
+<div class="container">
+<h1>404</h1>
+<p class="not-found-subtitle">This page doesn't exist.</p>
+<p>The link may be old or mistyped. Everything about my work is on the home page.</p>
+<div class="buttons">
+<a href="/" class="btn primary">Go to home page</a>
+</div>
+</div>
+</main>
+
+<script>
+try {
+  const theme = localStorage.getItem('portfolio-theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  document.body.classList.toggle('light-theme', theme === 'light');
+} catch {
+  // Falls back to the dark theme.
+}
+</script>
+
+</body>
+</html>

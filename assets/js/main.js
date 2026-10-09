@@ -251,7 +251,6 @@ const initializeSkillDetails = () => {
     const skillName = item.textContent.trim();
     const category = item.closest('.skill-card').querySelector('h3').textContent;
     item.dataset.description = skillDescriptions[skillName] || `${category} capability used in quality engineering delivery.`;
-    item.tabIndex = 0;
   });
 };
 
@@ -321,13 +320,25 @@ const applyTheme = theme => {
   themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark theme' : 'Switch to light theme');
 };
 
-const savedTheme = localStorage.getItem('portfolio-theme');
-applyTheme(savedTheme || 'dark');
+const readSavedTheme = () => {
+  try {
+    return localStorage.getItem('portfolio-theme');
+  } catch {
+    return null;
+  }
+};
+
+const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+applyTheme(readSavedTheme() || systemTheme);
 
 themeToggle.addEventListener('click', () => {
   const nextTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
   applyTheme(nextTheme);
-  localStorage.setItem('portfolio-theme', nextTheme);
+  try {
+    localStorage.setItem('portfolio-theme', nextTheme);
+  } catch {
+    // The choice then lasts for this page view only.
+  }
 });
 
 const resumeDownload = document.querySelector('.primary[download]');
