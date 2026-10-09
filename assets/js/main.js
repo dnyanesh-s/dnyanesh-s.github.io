@@ -331,7 +331,23 @@ const readSavedTheme = () => {
 const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 applyTheme(readSavedTheme() || systemTheme);
 
+const themeHintKey = 'theme-hint-seen';
+const hideThemeHint = () => themeToggle.classList.remove('is-hinting');
+
+try {
+  if (!readSavedTheme() && !localStorage.getItem(themeHintKey)) {
+    localStorage.setItem(themeHintKey, 'yes');
+    window.setTimeout(() => {
+      themeToggle.classList.add('is-hinting');
+      window.setTimeout(hideThemeHint, 4500);
+    }, 1200);
+  }
+} catch {
+  // Without storage the hint is skipped rather than shown on every visit.
+}
+
 themeToggle.addEventListener('click', () => {
+  hideThemeHint();
   const nextTheme = document.body.classList.contains('light-theme') ? 'dark' : 'light';
   applyTheme(nextTheme);
   try {
