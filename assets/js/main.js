@@ -49,10 +49,6 @@ document.addEventListener('keydown', event => {
     skillSearch?.scrollIntoView({behavior:'smooth', block:'center'});
     skillSearch?.focus({preventScroll:true});
   }
-
-  if (event.key.toLowerCase() === 't') {
-    themeToggle?.click();
-  }
 });
 
 const revealObserver = new IntersectionObserver(entries => {
@@ -373,3 +369,71 @@ document.querySelectorAll('.copy-action').forEach(button => {
     }, 1600);
   });
 });
+
+const analyticsId = 'G-DPGW1NK2TL';
+const consentKey = 'analytics-consent';
+const consentBanner = document.querySelector('.consent-banner');
+const cookieSettings = document.querySelector('.cookie-settings');
+
+const readConsent = () => {
+  try {
+    return localStorage.getItem(consentKey);
+  } catch {
+    return null;
+  }
+};
+
+const loadAnalytics = () => {
+  if (window.gtag) return;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag('js', new Date());
+  window.gtag('config', analyticsId);
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`;
+  document.head.append(script);
+};
+
+const clearAnalyticsCookies = () => {
+  document.cookie.split(';').map(cookie => cookie.split('=')[0].trim()).filter(name => name.startsWith('_ga')).forEach(name => {
+    document.cookie = `${name}=; Max-Age=0; path=/; domain=${window.location.hostname}`;
+    document.cookie = `${name}=; Max-Age=0; path=/`;
+  });
+};
+
+const setConsent = choice => {
+  try {
+    localStorage.setItem(consentKey, choice);
+  } catch {
+    // Storage can be unavailable in private browsing; the choice then lasts for this page view only.
+  }
+  consentBanner.hidden = true;
+  cookieSettings.hidden = false;
+  if (choice === 'granted') {
+    loadAnalytics();
+  } else {
+    window[`ga-disable-${analyticsId}`] = true;
+    clearAnalyticsCookies();
+  }
+};
+
+consentBanner.querySelector('.consent-accept').addEventListener('click', () => setConsent('granted'));
+consentBanner.querySelector('.consent-decline').addEventListener('click', () => setConsent('denied'));
+cookieSettings.addEventListener('click', () => {
+  consentBanner.hidden = false;
+  cookieSettings.hidden = true;
+  consentBanner.querySelector('.consent-accept').focus();
+});
+
+const savedConsent = readConsent();
+if (savedConsent === 'granted') {
+  loadAnalytics();
+}
+if (savedConsent) {
+  cookieSettings.hidden = false;
+} else {
+  consentBanner.hidden = false;
+}

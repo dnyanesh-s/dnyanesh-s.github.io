@@ -833,6 +833,25 @@ mark{
   text-align:center;
 }
 
+#blog .card a,
+.contact-card a{
+  color:var(--accent);
+  font-weight:500;
+  text-underline-offset:3px;
+}
+
+#blog .card a:hover,
+.contact-card a:hover{
+  color:var(--text);
+}
+
+#blog .card a:focus-visible,
+.contact-card a:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
 .contact-line{
   display:flex;
   align-items:center;
@@ -864,13 +883,13 @@ footer{
   color:var(--muted);
 }
 
-section:not(.hero) > .container{
+.js section:not(.hero) > .container{
   opacity:0;
   transform:translateY(24px);
   transition:opacity .7s ease,transform .7s ease;
 }
 
-section:not(.hero) > .container.is-visible{
+.js section:not(.hero) > .container.is-visible{
   opacity:1;
   transform:none;
 }
@@ -1006,6 +1025,78 @@ section:not(.hero) > .container.is-visible{
       margin:10px auto;
       width:min(100%,280px);
     }
+}
+
+.cookie-settings{
+  margin-top:10px;
+  padding:0;
+  border:0;
+  background:none;
+  color:var(--muted);
+  font:inherit;
+  font-size:.8rem;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
+.cookie-settings:hover{
+  color:var(--accent);
+}
+
+.cookie-settings:focus-visible,
+.consent-banner button:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
+
+.consent-banner{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  left:16px;
+  z-index:100;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px 20px;
+  max-width:720px;
+  margin:0 auto;
+  padding:16px 20px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--card);
+  box-shadow:0 12px 40px rgba(2,6,23,.45);
+  color:var(--text);
+  font-size:.9rem;
+}
+
+.consent-banner[hidden],
+.cookie-settings[hidden]{
+  display:none;
+}
+
+.consent-banner p{
+  flex:1 1 280px;
+}
+
+.consent-actions{
+  display:flex;
+  gap:10px;
+}
+
+.consent-actions .btn{
+  margin:0;
+  padding:10px 20px;
+  border:1px solid var(--primary);
+  font:inherit;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.consent-actions .secondary{
+  border-color:var(--accent);
+  background:transparent;
 }
 
 @media(max-width:380px){
